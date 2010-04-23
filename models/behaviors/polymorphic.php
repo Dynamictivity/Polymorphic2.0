@@ -16,8 +16,8 @@
  * @license		http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 class PolymorphicBehavior extends ModelBehavior {
-
-	private $__polyconditions = null;
+	
+	private $__polyConditions = null;
 
 	public function setup(&$model, $config = array()) {
 		$this->settings[$model->name] = am (array('classField' => 'class', 'foreignKey' => 'foreign_id'),$config);
@@ -25,9 +25,9 @@ class PolymorphicBehavior extends ModelBehavior {
 
 	public function beforeFind(&$model, $queryData) {
         // You can set conditions for each model associated with the polymorphic model.
-		if (isset($queryData['polyconditions'])) {
-			$this->__polyconditions = $queryData['polyconditions'];
-			unset($queryData['polyconditions']);
+		if (isset($queryData['polyConditions'])) {
+			$this->__polyConditions = $queryData['polyConditions'];
+			unset($queryData['polyConditions']);
 		}
 		return $queryData;
 	}
@@ -45,8 +45,8 @@ class PolymorphicBehavior extends ModelBehavior {
 							$class . '.id' => $foreignId
 						)
 					);
-					if (isset($this->__polyconditions[$class])) {
-						$associatedConditions = Set::merge($associatedConditions, $this->__polyconditions[$class]);
+					if (isset($this->__polyConditions[$class])) {
+						$associatedConditions = Set::merge($associatedConditions, $this->__polyConditions[$class]);
 					}
 					$result = $result[$model->alias];
 					if (!isset($model->$class)) {
